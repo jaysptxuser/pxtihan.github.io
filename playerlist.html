@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player List</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide/dist/lucide.min.css">
+</head>
+<body>
+<div id="particles"></div>
+
+<audio id="bgAudio" loop autoplay>
+  <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-control">
+  <div class="volume-control">
+    <span>VOLUME</span>
+    <input type="range" id="volumeRange" min="0" max="100" value="50">
+    <span id="volumeValue">50%</span>
+  </div>
+</div>
+
+<div class="page">
+  <div class="search-container">
+    <h1 class="title">PXTIHAN LASTNAME</h1>
+    <input type="text" id="searchInput" placeholder="ค้นหาชื่อหรือชื่อเล่น..." class="input-search">
+    <div id="profilesContainer" class="profiles-container"></div>
+    <div class="pagination" id="pagination"></div>
+    <button onclick="location.href='mainpage.html'" class="btn">กลับหน้าหลัก</button>
+    <div class="profile-stats" id="profileStats"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+const particlesContainer = document.getElementById('particles');
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
+  p.style.animationDuration=(5+Math.random()*10)+'s';
+  p.style.animationDelay=Math.random()*5+'s';
+  particlesContainer.appendChild(p);
+}
+
+// Auto-play audio
+const audio=document.getElementById('bgAudio');
+audio.volume=0.5;
+audio.play().catch(e=>console.log("Autoplay blocked",e));
+</script>
+</body>
+</html>

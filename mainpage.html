@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Page</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="particles"></div>
+
+<!-- Theme Toggle Button -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+  <span class="theme-icon">🌙</span>
+</button>
+
+<!-- Audio Player -->
+<audio id="bgAudio" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Music Control Bottom Right -->
+<div class="music-player">
+  <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlayPause()">
+    <span id="playIcon">▶️</span>
+  </button>
+  <div class="volume-wrapper">
+    <span class="volume-icon">🔊</span>
+    <input type="range" id="volumeRange" min="0" max="100" value="50">
+    <span id="volumeValue">50%</span>
+  </div>
+</div>
+
+<div class="home-content">
+  <h1 class="logo">PATIHAN LISTNAME</h1>
+  <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:center;">
+    <button onclick="location.href='playerlist.html'" class="btn">PXTIHAN PLAYER</button>
+    <button onclick="window.open('https://www.facebook.com', '_blank')" class="btn">PXTSTYLE</button>
+  </div>
+</div>
+<div class="footer-bar">POWERED BY JAYS7799</div>
+
+<script>
+// Particles
+const particlesContainer=document.getElementById('particles');
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
+  p.style.animationDuration=(5+Math.random()*10)+'s';
+  p.style.animationDelay=Math.random()*5+'s';
+  particlesContainer.appendChild(p);
+}
+
+// Audio Setup
+const audio = document.getElementById('bgAudio');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const playIcon = document.getElementById('playIcon');
+const volumeRange = document.getElementById('volumeRange');
+const volumeValue = document.getElementById('volumeValue');
+
+audio.volume = 0.5;
+
+// Auto-play
+setTimeout(() => {
+  audio.play().then(() => {
+    playIcon.textContent = '⏸️';
+  }).catch(e => {
+    console.log("Autoplay blocked. Click play button.", e);
+  });
+}, 500);
+
+// Play/Pause Toggle
+function togglePlayPause() {
+  if (audio.paused) {
+    audio.play();
+    playIcon.textContent = '⏸️';
+  } else {
+    audio.pause();
+    playIcon.textContent = '▶️';
+  }
+}
+
+// Volume Control
+volumeRange.addEventListener('input', () => {
+  audio.volume = volumeRange.value / 100;
+  volumeValue.textContent = volumeRange.value + '%';
+});
+
+// Theme Toggle
+function toggleTheme() {
+  const body = document.body;
+  const themeIcon = document.querySelector('.theme-icon');
+  
+  if (body.classList.contains('light-mode')) {
+    body.classList.remove('light-mode');
+    themeIcon.textContent = '🌙';
+    saveTheme('dark');
+  } else {
+    body.classList.add('light-mode');
+    themeIcon.textContent = '☀️';
+    saveTheme('light');
+  }
+}
+
+// Save/Load Theme
+function saveTheme(theme) {
+  try {
+    window.currentTheme = theme;
+  } catch(e) {}
+}
+
+function loadTheme() {
+  const theme = window.currentTheme || 'dark';
+  if (theme === 'light') {
+    document.body.classList.add('light-mode');
+    document.querySelector('.theme-icon').textContent = '☀️';
+  }
+}
+
+loadTheme();
+</script>
+</body>
+</html>
